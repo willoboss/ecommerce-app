@@ -36,4 +36,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/monpanier', function () {
+    return view('monpanier');
+})->middleware(['auth'])->name('panier');
+
 require __DIR__.'/auth.php';

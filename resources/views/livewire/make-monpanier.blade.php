@@ -1,0 +1,45 @@
+<div x-data="{
+
+
+}">
+    <!-- Create By Joker Banny -->
+<!-- Create By Joker Banny -->
+<div class=" max-h-screen mt-8 bg-gray-100">
+  <div class="flex flex-row gap-8 mx-auto px-5">
+    @foreach ($monpanier as $commande)
+        
+    
+    <div class=" max-w-md cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
+      <img class="w-full rounded-lg object-cover object-center " style="width: 200px; height: 200px" src="{{  $commande['lignecommandes'][0]['article']['photo'] }}" alt="product" />
+      <div>
+        <div class="my-6 flex items-center justify-between px-4">
+          <p class="font-bold text-gray-500">{{  $commande['lignecommandes'][0]['article']['nom'] }}</p>
+          <p class="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">{{  $commande['lignecommandes'][0]['article']['prix'] }} cfa</p>
+        </div>
+        <div class="my-4 flex items-center justify-between px-4">
+          <p class="text-sm font-semibold text-gray-500">Quantité</p>
+          <p class="rounded-full bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-600">{{  $commande['lignecommandes'][0]['quantite'] }} </p>
+        </div>
+        <div class="my-4 flex items-center justify-between px-4">
+          <p class="text-sm font-semibold text-gray-500">Prix commande</p>
+          <p class="rounded-full bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-600">{{  $commande['lignecommandes'][0]['prix_commande'] }} cfa</p>
+        </div>
+        <div class="my-4 flex items-center justify-between px-4">
+          <p class="text-sm font-semibold text-gray-500">Code</p>
+          <p class="rounded-full bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-600">{{  $commande['code'] }}</p>
+        </div>
+        <div class="my-4 flex items-center justify-between px-4">
+          <p class="text-sm font-semibold text-gray-500">Statut</p>
+          <p class="rounded-full bg-orange-200 px-2 py-0.5 text-xs font-semibold text-gray-600">en cours de livraison</p>
+        </div>
+        <div class="my-4 flex items-center justify-between px-4">
+            <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
+                Suivre
+            </button>
+          </div>
+      </div>
+    </div>
+    @endforeach
+  </div>
+</div>
+</div>

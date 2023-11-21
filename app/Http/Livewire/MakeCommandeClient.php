@@ -24,7 +24,6 @@ class MakeCommandeClient extends Component
 
     public function Commande(){
             $commande = new Commande();
-
             $commande->code = $this->codeCommande;
             $commande->user_id = $this->userId;
             $commande->save();
