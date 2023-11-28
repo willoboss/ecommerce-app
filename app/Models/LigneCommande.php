@@ -16,4 +16,8 @@ class LigneCommande extends Model
     public function commande(){
         return $this->belongsTo(Commande::class);
     }
+
+    public function statut(){
+        return $this->belongsTo(Statut::class);
+    }
 }

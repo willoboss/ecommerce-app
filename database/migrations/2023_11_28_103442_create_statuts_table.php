@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Article;
-use App\Models\Commande;
-use App\Models\Statut;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ligne_commandes', function (Blueprint $table) {
+        Schema::create('statuts', function (Blueprint $table) {
             $table->id();
-            $table->integer('quantite');
-            $table->integer('prix_commande');
-            $table->foreignIdFor(Article::class);
-            $table->foreignIdFor(Commande::class);
-            $table->foreignIdFor(Statut::class);
+            $table->string('libelle');
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ligne_commandes');
+        Schema::dropIfExists('statuts');
     }
 };

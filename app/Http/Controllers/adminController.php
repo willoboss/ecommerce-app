@@ -19,6 +19,8 @@ class adminController extends Controller
         $check=$request->all();
         if(Auth::guard("admin")->attempt(['email'=> $check['email'],'password'=> $check['password']] )){
             return redirect()->route("admin.dashboard")->with('success','Admin Bien connecté!!');
+        } else {
+            return back()->with('error',' email ou mot de passe invalide!');
         }
     }
 
@@ -26,7 +28,7 @@ class adminController extends Controller
         return view("admin.dashboard");
     }
 
-    
+
 
     public function Register(){
         return view("admin.register");
@@ -44,6 +46,11 @@ class adminController extends Controller
 
         return redirect()->route("login_form")->with("success","Admin Enregistrer!");
 
+    }
+
+    public function Logout(){
+        Auth::guard('admin')->logout();
+        return redirect()->route("login_form")->with('error','Admin deconnecté!!');
     }
 
     public function Articles(){

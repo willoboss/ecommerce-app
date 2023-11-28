@@ -23,7 +23,9 @@ Route::prefix("admin")->group(function () {
     Route::post("/register/create",[adminController::class,"AdminRegister"])->name("admin.register.create");
     Route::get("/dashboard",[adminController::class,"Dashboard"])->middleware(['admin'])->name("admin.dashboard");
     Route::post("/login/owner",[adminController::class,"AdminLogin"])->name("admin.login");
+    Route::post("/logout",[adminController::class,"Logout"])->name("admin.logout");
     Route::get("/article",[adminController::class,"Articles"])->name("admin.article");
+
 
 });
 
