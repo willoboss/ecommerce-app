@@ -48,6 +48,10 @@ class adminController extends Controller
 
     }
 
+    public function Commandes(){
+        return view("admin.commande");
+    }
+
     public function Logout(){
         Auth::guard('admin')->logout();
         return redirect()->route("login_form")->with('error','Admin deconnecté!!');

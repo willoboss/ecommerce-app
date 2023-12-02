@@ -25,7 +25,9 @@ class MakeCommandeClient extends Component
     public function Commande(){
             $commande = new Commande();
             $commande->code = $this->codeCommande;
+            $commande->date_commande =date('Y-m-d H:i:s');
             $commande->user_id = $this->userId;
+            // dd( $commande);
             $commande->save();
 
             $comm=Commande::where('code',$this->codeCommande)->get()->toArray();
@@ -39,8 +41,11 @@ class MakeCommandeClient extends Component
             $ligne->prix_commande = $this->prixCommande;
             $ligne->article_id =$this->articleId;
             $ligne->commande_id=$this->Commande();
+            $ligne->statut_id=1;
 
             $ligne->save();
+
+            return redirect()->route("panier");
 
         }
 

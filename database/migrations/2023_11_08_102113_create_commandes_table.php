@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->time('date_commande');
+            $table->dateTime('date_commande');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
