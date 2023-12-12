@@ -2,10 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CommandeMail;
 use App\Models\Article;
+use App\Models\Categorie;
 use App\Models\Commande;
 use App\Models\LigneCommande;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class MakeCommandeClient extends Component
@@ -19,6 +23,7 @@ class MakeCommandeClient extends Component
     public $articleId;
     public $prixCommande = 0;
     public $quantiteCommande;
+    public $lesCategories;
 
 
 
@@ -45,6 +50,9 @@ class MakeCommandeClient extends Component
 
             $ligne->save();
 
+            $mail = Commande::with('lignecommandes', 'lignecommandes.article', 'lignecommandes.statut')->where("user_id",Auth::user()->id)->where('code',$this->codeCommande)->get()->toArray();
+            // dd($mail);
+            Mail::send(new CommandeMail($mail));
             return redirect()->route("panier");
 
         }
@@ -53,6 +61,7 @@ class MakeCommandeClient extends Component
     public function Option(){
         $this->lesArticles = Article::all()->toArray();
         $this->lescodes = Commande::pluck('code');
+        $this->lesCategories=Categorie::all();
     }
 
     public function render()
