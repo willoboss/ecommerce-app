@@ -23,7 +23,7 @@ class MakeCommandeClient extends Component
     public $articleId;
     public $prixCommande = 0;
     public $quantiteCommande;
-    public $lesCategories;
+    public $lesCategories=[];
 
 
 
@@ -59,9 +59,9 @@ class MakeCommandeClient extends Component
 
 
     public function Option(){
-        $this->lesArticles = Article::all()->toArray();
+        $this->lesArticles = Article::with('categorie')->get()->toArray();
         $this->lescodes = Commande::pluck('code');
-        $this->lesCategories=Categorie::all();
+        $this->lesCategories=Categorie::all()->toArray();
     }
 
     public function render()

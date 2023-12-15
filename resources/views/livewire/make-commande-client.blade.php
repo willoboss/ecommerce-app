@@ -8,19 +8,24 @@
     userId:@entangle('userId').defer,
     prixCommande:@entangle('prixCommande').defer,
     quantiteCommande:@entangle('quantiteCommande').defer,
+    lesCategories:@entangle('lesCategories').defer,
     libelle:'',
     prix:'',
     stock:'',
     photo:'',
     nombre:1,
 
+
     boolModal:false,
 
     searchTerm: '',
-    filterItems() {
-        return this.lesArticles.filter(item => {
-            return (item.nom.toLowerCase().includes(this.searchTerm.toLowerCase()))
-        })
+    searchTermC:'',
+    filterItems(id) {
+        console.log(this.lesCategories)
+
+        const result= Object.values(this.lesCategories).filter(item => item.id === id)
+        this.searchTerm=result[0].libelle
+        console.log(this.searchTermC)
     },
 
 
@@ -106,7 +111,7 @@
                     <div class="flex flex-col sm:flex-row">
 
                         @foreach ($lesCategories as $categorie)
-                        <p class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">{{ $categorie->libelle }}</p>
+                        <p class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" x-on:click="filterItems({{  $categorie['id'] }})" href="#">{{ $categorie['libelle'] }}</p>
                         @endforeach
 
                     </div>
@@ -168,7 +173,7 @@
                     <h3 class="text-gray-600 text-2xl font-medium">Articles</h3>
                     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                         <template x-for="article in lesArticles">
-                            <div   x-show="(article.nom.toLowerCase().includes(searchTerm.toLowerCase()))" class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+                            <div   x-show="(article.nom.toLowerCase().includes(searchTerm.toLowerCase()) || article.categorie.libelle.toLowerCase().includes(searchTerm.toLowerCase()))" class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                                 <div class="flex items-end justify-end h-56 w-full bg-cover"  :style="'background-image: url(' + article.id + ');'">
                                     <button   x-on:click="ResearchArticle(article.id)"   @click="cartOpen = !cartOpen" class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                         COMMANDER
