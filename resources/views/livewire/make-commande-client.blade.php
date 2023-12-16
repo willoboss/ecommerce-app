@@ -24,7 +24,14 @@
         console.log(this.lesCategories)
 
         const result= Object.values(this.lesCategories).filter(item => item.id === id)
-        this.searchTerm=result[0].libelle
+        this.searchTermC=result[0].libelle
+        this.searchTerm = this.searchTermC
+        this.searchTermC=''
+        console.log(this.searchTermC)
+    },
+
+    checkSearch(){
+        this.searchTerm = this.searchTermC
         console.log(this.searchTermC)
     },
 
@@ -123,7 +130,7 @@
                     </svg>
                 </span>
 
-                    <input x-model="searchTerm" class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search">
+                    <input  x-on:change="checkSearch()" x-model="searchTermC" class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search">
                 </div>
             </div>
         </header>
