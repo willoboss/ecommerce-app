@@ -8,6 +8,7 @@
     statut_id:@entangle('statut_id').defer,
     commande_id:@entangle('commande_id').defer,
     photo:'',
+    searchTerm:'',
 
 
      checkUpdate(id){
@@ -34,7 +35,8 @@
                 });
             }
 
-     }">
+     }"
+     >
 
 <div class="container max-w-6xl px-4 mx-auto sm:px-8">
     <div class="py-8">
@@ -45,7 +47,7 @@
             <div class="text-end">
                 <form class="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
                     <div class=" relative ">
-                        <input type="text" id="&quot;form-subscribe-Filter" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="name"/>
+                        <input x-model="searchTerm" type="text" id="&quot;form-subscribe-Filter" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="name"/>
                         </div>
                         <button class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200" type="submit">
                             Recherche
@@ -79,65 +81,63 @@
                         </thead>
                         <tbody>
 
-                           @foreach ($mesCommandes as $commande)
 
-                           <tr>
+                            <template x-for="commande in mesCommandes">
+                           <tr x-show="(commande.lignecommandes[0].article.nom.toLowerCase().includes(searchTerm.toLowerCase()) || commande.lignecommandes[0].statut.libelle.toLowerCase().includes(searchTerm.toLowerCase()) || commande.date_commande.toLowerCase().includes(searchTerm.toLowerCase()))">
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0">
                                         <a href="#" class="relative block">
-                                            <img alt="profil" src=" {{ $commande['lignecommandes'][0]['article']['photo'] }}" class="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                            <img alt="profil" x-bind:src="commande.lignecommandes[0].article.photo"  class="mx-auto object-cover rounded-full h-10 w-10 "/>
                                         </a>
+
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            {{ $commande['lignecommandes'][0]['article']['nom'] }}
+                                        <p class="text-gray-900 whitespace-no-wrap" x-text="commande.lignecommandes[0].article.nom">
+
                                         </p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 text-center whitespace-no-wrap">
-                                    {{ $commande['lignecommandes'][0]['quantite'] }}
+                                <p class="text-gray-900 text-center whitespace-no-wrap" x-text="commande.lignecommandes[0].quantite">
+
                                 </p>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $commande['lignecommandes'][0]['prix_commande'] }}
+                                <p class="text-gray-900 whitespace-no-wrap" x-text="commande.lignecommandes[0].prix_commande">
                                 </p>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $commande['date_commande'] }}
+                                <p class="text-gray-900 whitespace-no-wrap" x-text="commande.date_commande">
                                 </p>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
 
                                     <span x-bind:class="{
-                                        'bg-green-500': '{{ $commande['lignecommandes'][0]['statut']['libelle'] }}' === 'Livrée',
-                                        'bg-red-500': '{{ $commande['lignecommandes'][0]['statut']['libelle'] }}' === 'annulée',
-                                        'bg-blue-500': '{{ $commande['lignecommandes'][0]['statut']['libelle'] }}' === 'en cours de traitement',
-                                        'bg-orange-500': '{{ $commande['lignecommandes'][0]['statut']['libelle'] }}' === 'en expédition'
+                                        'bg-green-500': commande.lignecommandes[0].statut.libelle === 'Livrée',
+                                        'bg-red-500': commande.lignecommandes[0].statut.libelle === 'annulée',
+                                        'bg-blue-500': commande.lignecommandes[0].statut.libelle === 'en cours de traitement',
+                                        'bg-orange-500': commande.lignecommandes[0].statut.libelle === 'en expédition'
                                     }"
 
                                         class="relative rounded-full inline-block px-3 py-1 font-semibold leading-tight text-white"
                                     >
                                         <span aria-hidden="true" class="absolute inset-0 rounded-full opacity-50">
                                         </span>
-                                        <span class="relative">
-                                            {{ $commande['lignecommandes'][0]['statut']['libelle'] }}
+                                        <span class="relative" x-text="commande.lignecommandes[0].statut.libelle">
                                         </span>
                                     </span>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <button x-on:click="checkUpdate({{ $commande['id'] }})" data-modal-target="select-modal" data-modal-toggle="select-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                <button x-on:click="checkUpdate(commande.id)" data-modal-target="select-modal" data-modal-toggle="select-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                     Modifier
                                   </button>
                             </td>
                         </tr>
+                    </template>
 
 
-                           @endforeach
 
                         </tbody>
                     </table>
