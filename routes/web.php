@@ -43,4 +43,8 @@ Route::get('/monpanier', function () {
     return view('monpanier');
 })->middleware(['auth'])->name('panier');
 
+Route::get('/categories', function () {
+    return view('categories');
+})->middleware(['auth'])->name('categorie');
+
 require __DIR__.'/auth.php';
