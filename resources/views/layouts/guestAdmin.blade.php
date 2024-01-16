@@ -27,6 +27,7 @@
     </head>
     <body>
 
+
         <div class="flex flex-col h-screen bg-gray-100">
 
             {{-- barre horizontal --}}

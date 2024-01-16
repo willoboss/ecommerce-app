@@ -67,3 +67,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 https://www.tailwind-kit.com/components/table
 https://flowbite.com/docs/components/tabs/
+https://tailwindcomponents.com/component/free-tailwind-css-vertical-navigation-component
